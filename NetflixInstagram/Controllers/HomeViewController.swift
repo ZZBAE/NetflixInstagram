@@ -33,23 +33,20 @@ class HomeViewController: UIViewController {
 
         homeFeedTable.delegate = self
         homeFeedTable.dataSource = self
+        configureNavBar()
 
         let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 500))
         homeFeedTable.tableHeaderView = headerView
 
-        configureNavBar()
     }
 
     private func configureNavBar() {
-        let image = UIImage(named: "NetflixLogo")?.withRenderingMode(.alwaysOriginal)
-        image?.withRenderingMode(.alwaysOriginal)
-
-        navigationItem.leftBarButtonItems = [UIBarButtonItem(image: image,
-                                                             style: .done,
-                                                             target: self,
-                                                             action: nil),
-                                             UIBarButtonItem.fixedSpace(30)]
-
+        var image = UIImage(named: "NetflixLogo")
+        image = image?.withRenderingMode(.alwaysOriginal)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image,
+                                                           style: .done,
+                                                           target: self,
+                                                           action: nil)
 
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(systemName: "person"),
