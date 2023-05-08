@@ -7,143 +7,140 @@
 
 import UIKit
 
+import UIKit
+
 class UpcomingViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
+        let view = UICollectionView(frame: .zero, collectionViewLayout: self.getLayout())
         view.isScrollEnabled = true
-        view.showsHorizontalScrollIndicator = true
-        view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
-//        view.contentInset = .zero
-//        view.clipsToBounds = true
-//        view.register(InstaStoryCell.self, forCellWithReuseIdentifier: "InstaStoryCell")
+        view.showsVerticalScrollIndicator = true
+        view.contentInset = .zero
+        view.backgroundColor = .clear
+        view.clipsToBounds = true
+        view.register(InstaStoryCell.self, forCellWithReuseIdentifier: InstaStoryCell.id)
         view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
         return view
     }()
 
+    private var dataSource: [MySection] = [
+        .main(
+            [
+                .init(text: "Story1"),
+                .init(text: "Story2"),
+                .init(text: "Story3"),
+                .init(text: "Story4"),
+                .init(text: "Story5"),
+                .init(text: "Story6"),
+                .init(text: "Story7"),
+                .init(text: "Story8"),
+                .init(text: "Story9"),
+                .init(text: "Story10"),
+                .init(text: "Story11"),
+                .init(text: "Story12"),
+                .init(text: "Story13"),
+            ]
+        ),
+        .sub(
+            [
+                .init(text: "Feed1"),
+                .init(text: "Feed2"),
+                .init(text: "Feed3"),
+                .init(text: "Feed4"),
+                .init(text: "Feed5"),
+                .init(text: "Feed6"),
+                .init(text: "Feed7"),
+            ]
+        ),
+    ]
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
 
-        setupCollectionView()
-        configureNavBar()
+        NSLayoutConstraint.activate([
+            self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
+            self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
+            self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -10),
+            self.collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
+        ])
+
+        self.collectionView.dataSource = self
     }
 
-    private func setupCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.collectionViewLayout = createLayout()
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+    private func getLayout() -> UICollectionViewLayout {
+        return UICollectionViewCompositionalLayout { sectionIndex, env -> NSCollectionLayoutSection? in
+            switch self.dataSource[sectionIndex] {
+            case .main:
+                return self.getGridSection()
+            case .sub:
+                return self.getListSection()
+            }
+        }
     }
 
-    private func configureNavBar() {
-        var image = UIImage(named: "InstagramLogo")
-        image = image?.withRenderingMode(.alwaysOriginal)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image,
-                                                           style: .done,
-                                                           target: self,
-                                                           action: nil)
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(systemName: "paperplane"),
-                            style: .done,
-                            target: self,
-                            action: nil),
-            UIBarButtonItem(image: UIImage(systemName: "heart"),
-                            style: .done,
-                            target: self,
-                            action: nil)
-        ]
-        navigationController?.navigationBar.tintColor = .white
+    private func getGridSection() -> NSCollectionLayoutSection {
+
+        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(90),
+                                              heightDimension: .absolute(90))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .fractionalHeight(0.15))
+
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 4)
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+
+        return section
     }
 
-    private func createLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { section, env -> NSCollectionLayoutSection? in
-            let item = NSCollectionLayoutItem(
-              layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1/5),
-                heightDimension: .fractionalHeight(1)
-              )
-            )
-            let group = NSCollectionLayoutGroup.horizontal(
-              layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(0.2),
-                heightDimension: .absolute(140)
-              ),
-              subitems: [item])
-            group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0)
-
-            // section
-            let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .continuous
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
-
-            // return
-            return section
-
-          }
+    private func getListSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(120)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+        return NSCollectionLayoutSection(group: group)
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionView.frame = view.bounds
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.collectionView.performBatchUpdates(nil, completion: nil)
     }
 }
 
-extension UpcomingViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension UpcomingViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        self.dataSource.count
     }
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        switch self.dataSource[section] {
+        case let .main(items):
+            return items.count
+        case let .sub(items):
+            return items.count
+        }
     }
-
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-
-        cell.backgroundColor = .red
-        cell.layer.cornerRadius = 8
-
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InstaStoryCell.id, for: indexPath) as! InstaStoryCell
+        switch self.dataSource[indexPath.section] {
+        case let .main(items):
+            cell.prepare(text: items[indexPath.item].text)
+        case let .sub(items):
+            cell.prepare(text: items[indexPath.item].text)
+        }
         return cell
     }
 }
-
-//extension UpcomingViewController: UICollectionViewDelegateFlowLayout {
-//  private func createCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-//    return UICollectionViewCompositionalLayout { (section, _) -> NSCollectionLayoutSection? in
-//      if section == 0 {
-//        // item
-//        let item = NSCollectionLayoutItem(
-//          layoutSize: NSCollectionLayoutSize(
-//            widthDimension: .fractionalWidth(1/5),
-//            heightDimension: .fractionalHeight(1)
-//          )
-//        )
-//        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8)
-//
-//        // group
-//        let group = NSCollectionLayoutGroup.horizontal(
-//          layoutSize: NSCollectionLayoutSize(
-//            widthDimension: .fractionalWidth(1),
-//            heightDimension: .absolute(140)
-//          ),
-//          subitem: item,
-//          count: 5
-//        )
-//        group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0)
-//
-//        // section
-//        let section = NSCollectionLayoutSection(group: group)
-//        section.orthogonalScrollingBehavior = .continuous
-//        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
-//
-//        // return
-//        return section
-//
-//      }
-//      return nil
-//    }
-//  }
-//
-//
-//}

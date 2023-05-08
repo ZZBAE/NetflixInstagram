@@ -28,6 +28,8 @@
 		7EA7250829F524630056178D /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA7250729F524630056178D /* APICaller.swift */; };
 		7EA7254629F668A50056178D /* Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA7254529F668A50056178D /* Title.swift */; };
 		7EA7254829F670AF0056178D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA7254729F670AF0056178D /* Extensions.swift */; };
+		7EC49C432A08EEAA00F08FAB /* MySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC49C422A08EEAA00F08FAB /* MySection.swift */; };
+		7EC49C452A08F68900F08FAB /* MyBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC49C442A08F68900F08FAB /* MyBadgeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		7EA7250729F524630056178D /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		7EA7254529F668A50056178D /* Title.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Title.swift; sourceTree = "<group>"; };
 		7EA7254729F670AF0056178D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		7EC49C422A08EEAA00F08FAB /* MySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySection.swift; sourceTree = "<group>"; };
+		7EC49C442A08F68900F08FAB /* MyBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBadgeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +204,8 @@
 				7EA7250529F51B440056178D /* CollectionViewTableViewCell.swift */,
 				7E3D1DCB29FBCD2C0047DD32 /* TitleCollectionViewCell.swift */,
 				7E3D1DD229FC29BF0047DD32 /* InstaStoryCell.swift */,
+				7EC49C422A08EEAA00F08FAB /* MySection.swift */,
+				7EC49C442A08F68900F08FAB /* MyBadgeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -349,6 +355,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EC49C452A08F68900F08FAB /* MyBadgeView.swift in Sources */,
+				7EC49C432A08EEAA00F08FAB /* MySection.swift in Sources */,
 				7EA7250029F51AE70056178D /* SearchViewController.swift in Sources */,
 				7E3D1DCC29FBCD2C0047DD32 /* TitleCollectionViewCell.swift in Sources */,
 				7EA7250429F51B210056178D /* HeroHeaderUIView.swift in Sources */,
