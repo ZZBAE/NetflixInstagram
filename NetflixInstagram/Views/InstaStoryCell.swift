@@ -32,7 +32,9 @@ final class InstaStoryCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        self.layer.cornerRadius = layer.bounds.width / 2
         self.backgroundColor = UIColor(red: self.randomValue, green: self.randomValue, blue: self.randomValue, alpha: 1.0)
+
         NSLayoutConstraint.activate([
             self.label.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 16),
             self.label.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -16),

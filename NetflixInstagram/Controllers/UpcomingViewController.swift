@@ -18,7 +18,10 @@ class UpcomingViewController: UIViewController {
         view.contentInset = .zero
         view.backgroundColor = .clear
         view.clipsToBounds = true
+
         view.register(InstaStoryCell.self, forCellWithReuseIdentifier: InstaStoryCell.id)
+        view.register(MyBadgeView.self, forSupplementaryViewOfKind: "MyBadgeView", withReuseIdentifier: "MyBadgeView")
+
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
         return view
@@ -39,7 +42,6 @@ class UpcomingViewController: UIViewController {
                 .init(text: "Story10"),
                 .init(text: "Story11"),
                 .init(text: "Story12"),
-                .init(text: "Story13"),
             ]
         ),
         .sub(
@@ -50,7 +52,6 @@ class UpcomingViewController: UIViewController {
                 .init(text: "Feed4"),
                 .init(text: "Feed5"),
                 .init(text: "Feed6"),
-                .init(text: "Feed7"),
             ]
         ),
     ]
@@ -83,14 +84,15 @@ class UpcomingViewController: UIViewController {
 
         let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(90),
                                               heightDimension: .absolute(90))
+
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
         item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
 
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                heightDimension: .fractionalHeight(0.15))
 
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 4)
+
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
 
@@ -102,16 +104,15 @@ class UpcomingViewController: UIViewController {
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
         )
+
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(120)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitems: [item]
-        )
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .absolute(250))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                       subitems: [item])
+
         return NSCollectionLayoutSection(group: group)
     }
 
